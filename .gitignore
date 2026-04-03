@@ -1,4 +1,31 @@
-.env
-.vscode/*
-var/*
-vendor/*
+# Symfony
+/var/
+/vendor/
+/public/bundles/
+/.env
+.env.local
+.env.local.php
+.env.*.local
+
+# Symfony runtime
+/config/secrets/prod/prod.decrypt.private.php
+
+# Logs and cache
+*.log
+.phpunit.result.cache
+.php-cs-fixer.cache
+
+# Docker
+docker-compose.override.yml
+.docker/
+
+# IDE
+.idea/
+.vscode/
+
+# Composer
+composer.phar
+
+# KeeSync specific
+/var/versions/*
+!/var/versions/.gitkeep
