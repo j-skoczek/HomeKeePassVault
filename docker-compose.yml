@@ -1,0 +1,70 @@
+services:
+  app:
+    build:
+      context: .
+      args:
+        APP_ENV: ${APP_ENV:-dev}
+      dockerfile: Dockerfile
+    container_name: homekeepassvault_app
+    ports:
+      - "80:80"
+      - "9003:9003"
+    env_file:
+      - .env
+    environment:
+      - APP_ENV=${APP_ENV:-dev}
+      - APP_DEBUG=${APP_DEBUG:-1}
+      - DATABASE_URL=${DATABASE_URL:-postgresql://symfony:symfony@db:5432/homekeepassvault}
+      - SERVER_NAME=0.0.0.0:80
+      - XDEBUG_CONFIG=idekey=vscode
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_USER=symfony
+      - DB_PASSWORD=symfony
+      - DB_NAME=homekeepassvault
+    volumes:
+      - .:/app:delegated
+      - vendor:/app/vendor
+      - /app/var
+    depends_on:
+      - db
+    networks:
+      - symfony
+
+  db:
+    image: postgres:16-alpine
+    container_name: homekeepassvault_db
+    environment:
+      POSTGRES_USER: symfony
+      POSTGRES_PASSWORD: symfony
+      POSTGRES_DB: homekeepassvault
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - symfony
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U symfony"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  adminer:
+    image: adminer:latest
+    container_name: homekeepassvault_adminer
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    networks:
+      - symfony
+
+volumes:
+  postgres_data:
+  vendor:
+
+networks:
+  symfony:
+    driver: bridge
+    

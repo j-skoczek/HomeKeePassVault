@@ -1,0 +1,15 @@
+.git
+.gitignore
+.env.local
+.env.*.local
+/var/
+/node_modules/
+/vendor/
+npm-debug.log
+yarn-error.log
+.DS_Store
+.idea
+.vscode
+*.log
+.git
+docker-compose.yml
