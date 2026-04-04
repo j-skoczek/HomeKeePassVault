@@ -14,14 +14,14 @@ services:
     environment:
       - APP_ENV=${APP_ENV:-dev}
       - APP_DEBUG=${APP_DEBUG:-1}
-      - DATABASE_URL=${DATABASE_URL:-postgresql://symfony:symfony@db:5432/homekeepassvault}
+      - DATABASE_URL=${DATABASE_URL:-postgresql://symfony:symfony@db:5432/keepassvault}
       - SERVER_NAME=0.0.0.0:80
       - XDEBUG_CONFIG=idekey=vscode
       - DB_HOST=db
       - DB_PORT=5432
       - DB_USER=symfony
       - DB_PASSWORD=symfony
-      - DB_NAME=homekeepassvault
+      - DB_NAME=${DB_NAME:-keepassvault}
     volumes:
       - .:/app:delegated
       - vendor:/app/vendor
@@ -37,7 +37,7 @@ services:
     environment:
       POSTGRES_USER: symfony
       POSTGRES_PASSWORD: symfony
-      POSTGRES_DB: homekeepassvault
+      POSTGRES_DB: ${DB_NAME:-keepassvault}
     ports:
       - "5432:5432"
     volumes:
@@ -54,7 +54,7 @@ services:
     image: adminer:latest
     container_name: homekeepassvault_adminer
     ports:
-      - "8080:8080"
+      - "8081:8080"
     depends_on:
       - db
     networks:
