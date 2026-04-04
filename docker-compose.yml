@@ -45,7 +45,7 @@ services:
     networks:
       - symfony
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U symfony"]
+      test: ["CMD-SHELL", "pg_isready -U symfony -d ${DB_NAME:-keepassvault}"]
       interval: 10s
       timeout: 5s
       retries: 5
