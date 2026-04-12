@@ -6,6 +6,7 @@
 .env.local
 .env.local.php
 .env.*.local
+.env.dev
 
 # Symfony runtime
 /config/secrets/prod/prod.decrypt.private.php
@@ -22,6 +23,7 @@ docker-compose.override.yml
 # IDE
 .idea/
 .vscode/
+.editorconfig
 
 # Composer
 composer.phar
